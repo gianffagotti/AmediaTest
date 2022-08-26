@@ -3,9 +3,30 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{5CA81121-E54F-49F3-89A7-A145F01C5D5F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{339408A4-6781-4208-9036-DC6C2D4020F9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infraestructure", "Infraestructure", "{CA42B861-8CCC-46FE-BBA1-46A1389294BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmediaTestCrud.Web", "AmediaTestCrud.Web\AmediaTestCrud.Web.csproj", "{5023F911-8C57-4830-9286-40A1C918AD9E}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5023F911-8C57-4830-9286-40A1C918AD9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5023F911-8C57-4830-9286-40A1C918AD9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5023F911-8C57-4830-9286-40A1C918AD9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5023F911-8C57-4830-9286-40A1C918AD9E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5023F911-8C57-4830-9286-40A1C918AD9E} = {339408A4-6781-4208-9036-DC6C2D4020F9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9BA4C85D-0728-4EAD-BA68-6A54D6C1A918}
