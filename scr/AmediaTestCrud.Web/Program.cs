@@ -1,10 +1,14 @@
 using AmediaTestCrud.Infraestructure.Data.Configurations;
 using AmediaTestCrud.Web.Configurations.DI;
+using AmediaTestCrud.Web.Configurations.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(config =>
+{
+    config.Filters.Add(typeof(VerifySessionFilter));
+});
 
 builder.Services.AddServices();
 builder.Services.AddContextDb(builder.Configuration);

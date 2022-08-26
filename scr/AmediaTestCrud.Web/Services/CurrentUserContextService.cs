@@ -25,6 +25,9 @@ public class CurrentUserContextService : ICurrentUserContextService
     public UserContext GetUser()
     {
         var userJson = _httpContextAccessor.HttpContext.Session.GetString(__UserKey__);
+        if (userJson is null)
+            return default;
+
         return JsonSerializer.Deserialize<UserContext>(userJson);
     }
 }
