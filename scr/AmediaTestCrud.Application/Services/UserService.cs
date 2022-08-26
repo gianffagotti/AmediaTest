@@ -15,11 +15,12 @@ public class UserService : IUserService
     {
         var user = await _userData.GetByUsername(userName);
 
-        if (user is not null &&
-            user.IsValidPassword(password) &&
-            user.IsActive())
-            return user;
-        else
+        if (user is null &&
+            !user.IsValidPassword(password))
             throw new Exception("Usuario y/o contraseña incorrecta");
+        else if (user.IsActive())
+            throw new Exception("Usuario inactivado!");
+        else
+            return user;
     }
 }

@@ -13,7 +13,6 @@ builder.Services.AddControllersWithViews(config =>
 builder.Services.AddServices();
 builder.Services.AddContextDb(builder.Configuration);
 
-builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 
 var app = builder.Build();

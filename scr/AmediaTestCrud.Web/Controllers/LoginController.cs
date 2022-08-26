@@ -21,21 +21,25 @@ namespace AmediaTestCrud.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(UserViewModel model)
+        public async Task<IActionResult> Index(UserViewModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var user = await _userService.ValidateUser(model.UserName, model.Password);
-
-                if(user is not null)
+                if (ModelState.IsValid)
                 {
+                    var user = await _userService.ValidateUser(model.UserName, model.Password);
+
                     _currentUserContextService.SetUser(new(user.Id, user.UserName, (UserRoles)user.RoleId));
 
                     return RedirectToAction("Index", "Home");
                 }
             }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+            }
 
-            return View();
+            return View("Index");
         }
     }
 }
