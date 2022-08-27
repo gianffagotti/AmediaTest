@@ -14,6 +14,7 @@ CREATE TABLE [dbo].[tPeliculaAlquiler](
 	[cod_pelicula] [int] NOT NULL,
 	[precio_alquiler] [numeric](18, 2) NULL,
 	[fecha_alquiler] [smalldatetime] NULL,
+	[devuelta] [bit] NULL,
  CONSTRAINT [PK_tPeliculaAlquiler] PRIMARY KEY CLUSTERED 
 (
 	[cod_pelicula_alquiler] ASC
