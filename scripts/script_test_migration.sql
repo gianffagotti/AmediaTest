@@ -375,7 +375,8 @@ GO
 -- Fecha:                
 --                
 ----------------------------------------------------------------------------------------------------------------------*/  
-CREATE PROCEDURE [dbo].[Sp_tusers_a] @txt_user     VARCHAR(50),  
+CREATE PROCEDURE [dbo].[Sp_tusers_a] @cod_usuario     INT out,  
+                                     @txt_user     VARCHAR(50),  
                                      @txt_password VARCHAR(50),  
                                      @txt_nombre   VARCHAR(200),  
                                      @txt_apellido VARCHAR(200),  
@@ -406,7 +407,8 @@ AS
                        @nro_doc,  
                        @cod_rol,  
                        @sn_activo)  
-      END   
+      END    
+	  set @cod_usuario = @@IDENTITY
 GO
 
 /*--------------------------------------------------------------------------------------------------------------------                
