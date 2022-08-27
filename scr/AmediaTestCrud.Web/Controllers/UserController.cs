@@ -1,5 +1,6 @@
 ﻿using AmediaTestCrud.Application.Intefaces.Services;
 using AmediaTestCrud.Domain.Entities;
+using AmediaTestCrud.Web.Configurations.Attributes;
 using AmediaTestCrud.Web.Models;
 using AmediaTestCrud.Web.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AmediaTestCrud.Web.Controllers;
 
+[AuthorizeUserAttribute(Models.UserContext.UserRoles.Admin)]
 public class UserController : Controller
 {
     #region Atributos
