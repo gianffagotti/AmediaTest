@@ -48,17 +48,7 @@ public class UserController : Controller
         if (user is null)
             return NotFound();
 
-        var model = new UserViewModel()
-        {
-            UserId = user.Id,
-            UserName = user.UserName,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            Document = user.Document,
-            RoleId = user.RoleId,
-            Role = user.Role.Description,
-            Active = user.IsActive(),
-        };
+        var model = CreateUserViewModel(user);
         return View(model);
     }
     #endregion
@@ -103,16 +93,7 @@ public class UserController : Controller
         if (user is null)
             return NotFound();
 
-        var model = new UserViewModel()
-        {
-            UserId = user.Id,
-            UserName = user.UserName,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            Document = user.Document,
-            RoleId = user.RoleId,
-            Active = user.IsActive(),
-        };
+        var model = CreateUserViewModel(user);
         return View(model);
     }
 
@@ -138,6 +119,35 @@ public class UserController : Controller
         ViewData["Roles"] = new SelectList(await _roleService.GetForSelect(), "Id", "Description");
         return View(model);
     }
+
+    public async Task<IActionResult> EditPassword(int? id)
+    {
+        var user = await _userService.GetById(id.Value);
+        if (user is null)
+            return NotFound();
+
+        var model = new ChangePasswordViewModel() { UserId = user.Id };
+        return View(model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> EditPassword(ChangePasswordViewModel model)
+    {
+
+        try
+        {
+            await _userService.UpdatePassword(model.UserId, model.OldPassword, model.NewPassword);
+
+            return RedirectToAction("Index");
+        }
+        catch (Exception ex)
+        {
+            ViewBag.Error = ex.Message;
+        }
+
+        return View(model);
+    }
     #endregion
 
     #region Eliminar
@@ -147,17 +157,7 @@ public class UserController : Controller
         if (user is null)
             return NotFound();
 
-        var model = new UserViewModel()
-        {
-            UserId = user.Id,
-            UserName = user.UserName,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            Document = user.Document,
-            RoleId = user.RoleId,
-            Role = user.Role.Description,
-            Active = user.IsActive(),
-        };
+        var model = CreateUserViewModel(user);
         return View(model);
     }
 
@@ -187,5 +187,21 @@ public class UserController : Controller
 
         return View(model);
     }
+    #endregion
+
+    #region Automapper
+    private UserViewModel CreateUserViewModel(User user)
+        => new UserViewModel()
+        {
+            UserId = user.Id,
+            UserName = user.UserName,
+            Password = user.Password,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Document = user.Document,
+            RoleId = user.RoleId,
+            Role = user.Role.Description,
+            Active = user.IsActive(),
+        };
     #endregion
 }

@@ -49,6 +49,22 @@ public class UserService : IUserService
 
     public async Task<User> GetById(int id)
         => await _userData.GetById(id);
+
+    public async Task UpdatePassword(int userId, string oldPassword, string newPassword)
+    {
+        var user = await _userData.GetById(userId);
+        if (user is null)
+            throw new Exception("Usuario no encontrado");
+
+        if(!user.IsValidPassword(oldPassword))
+            throw new Exception("La contraseña anterior incorrecta");
+
+        if(user.IsValidPassword(newPassword))
+            throw new Exception("La contraseña actual no puede ser la misma que la anterior");
+
+        user.ChangePassword(newPassword);
+        await _userData.Update(user);
+    }
     #endregion
 
     #region Privados

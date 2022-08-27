@@ -36,6 +36,7 @@ public class UserData : IUserData
 
     public async Task<IEnumerable<User>> GetAll()
         => await _context.Users.Include(u => u.Role)
+                               .AsNoTracking()
                                .ToListAsync();
 
     public async Task<User> GetByUsername(string userName)

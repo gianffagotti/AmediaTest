@@ -54,4 +54,7 @@ public partial class User
         RoleId = roleId;
         Active = active;
     }
+
+    public void ChangePassword(string newPassword)
+        => this.Password = newPassword;
 }
