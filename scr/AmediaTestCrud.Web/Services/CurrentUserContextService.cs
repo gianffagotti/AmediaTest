@@ -7,6 +7,7 @@ public interface ICurrentUserContextService
 {
     UserContext GetUser();
     void SetUser(UserContext user);
+    void RemoveUser();
 }
 
 public class CurrentUserContextService : ICurrentUserContextService
@@ -30,4 +31,7 @@ public class CurrentUserContextService : ICurrentUserContextService
 
         return JsonSerializer.Deserialize<UserContext>(userJson);
     }
+
+    public void RemoveUser()
+        => _httpContextAccessor.HttpContext.Session.Remove(__UserKey__);
 }

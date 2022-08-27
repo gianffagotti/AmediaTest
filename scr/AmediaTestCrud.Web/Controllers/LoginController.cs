@@ -41,5 +41,12 @@ namespace AmediaTestCrud.Web.Controllers
 
             return View("Index");
         }
+
+        public IActionResult Logout()
+        {
+            _currentUserContextService.RemoveUser();
+
+            return View("Index");
+        }
     }
 }
