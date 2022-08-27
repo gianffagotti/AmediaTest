@@ -5,4 +5,5 @@ namespace AmediaTestCrud.Application.Intefaces.Services;
 public interface IUserService
 {
     Task<User> ValidateUser(string userName, string password);
+    Task<IEnumerable<User>> GetAll();
 }

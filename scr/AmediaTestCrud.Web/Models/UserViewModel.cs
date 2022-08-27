@@ -4,11 +4,13 @@ namespace AmediaTestCrud.Web.Models;
 
 public class UserViewModel
 {
-    [Required(ErrorMessage = "El usuario es requerido")]
-    [Display(Name = "Usuario")]
+    public int UserId { get; set; }
     public string UserName { get; set; }
-
-    [Required(ErrorMessage = "La contraseña es requerida")]
-    [Display(Name = "Constraseña")]
     public string Password { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string Document { get; set; }
+    public int RoleId { get; set; }
+    public string Role { get; set; }
+    public int Active { get; set; }
 }

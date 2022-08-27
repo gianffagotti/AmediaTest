@@ -1,0 +1,41 @@
+﻿@model List<UserViewModel>
+
+@{
+    ViewBag.Title = "Listado de usuarios";
+}
+
+<h2>Usuarios</h2>
+
+<button asp-action="Crear" class="btn btn-secondary">Nuevo</button>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Rol</th>
+            <th>Activo</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.Role)
+                </td>
+                <td>
+                    @(item.Active == 1 ? "Si" : "No")
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

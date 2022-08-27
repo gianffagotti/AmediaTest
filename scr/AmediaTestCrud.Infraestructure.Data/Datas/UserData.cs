@@ -12,6 +12,11 @@ public class UserData : IUserData
     public UserData(TestCrudContext context)
         => _context = context;
 
+    public async Task<IEnumerable<User>> GetAll()
+        => await _context.Users.Include(u => u.Role)
+                               .ToListAsync();
+
     public async Task<User> GetByUsername(string userName)
-        => await _context.Users.FirstOrDefaultAsync(user => user.UserName == userName);
+        => await _context.Users.Include(u => u.Role)
+                               .FirstOrDefaultAsync(user => user.UserName == userName);
 }

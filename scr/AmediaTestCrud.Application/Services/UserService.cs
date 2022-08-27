@@ -11,14 +11,17 @@ public class UserService : IUserService
     public UserService(IUserData userData)
         => _userData = userData;
 
+    public async Task<IEnumerable<User>> GetAll()
+        => await _userData.GetAll();
+
     public async Task<User> ValidateUser(string userName, string password)
     {
         var user = await _userData.GetByUsername(userName);
 
         if (user is null &&
-            !user.IsValidPassword(password))
+            !user.IsValidPassword(password)) //La contraseña deberia estar encriptada
             throw new Exception("Usuario y/o contraseña incorrecta");
-        else if (user.IsActive())
+        else if (!user.IsActive())
             throw new Exception("Usuario inactivado!");
         else
             return user;

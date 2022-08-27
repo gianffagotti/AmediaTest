@@ -1,4 +1,5 @@
 ﻿using AmediaTestCrud.Web.Models;
+using AmediaTestCrud.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,20 +7,15 @@ namespace AmediaTestCrud.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ICurrentUserContextService _currentUserContextService;
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+        public HomeController(ICurrentUserContextService currentUserContextService) 
+            => _currentUserContextService = currentUserContextService;
 
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
+            var user = _currentUserContextService.GetUser();
+            ViewBag.Usuario = user?.UserName ?? "";
             return View();
         }
 

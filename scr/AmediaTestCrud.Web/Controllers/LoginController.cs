@@ -21,7 +21,7 @@ namespace AmediaTestCrud.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(UserViewModel model)
+        public async Task<IActionResult> Index(LoginViewModel model)
         {
             try
             {
