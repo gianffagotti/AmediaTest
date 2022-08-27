@@ -1,6 +1,7 @@
 ﻿using AmediaTestCrud.Application.Intefaces.Services;
 using AmediaTestCrud.Domain.Entities;
 using AmediaTestCrud.Web.Models;
+using AmediaTestCrud.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -9,11 +10,18 @@ namespace AmediaTestCrud.Web.Controllers;
 public class UserController : Controller
 {
     #region Atributos
+    private readonly ICurrentUserContextService _currentUserContextService;
     private readonly IUserService _userService;
     private readonly IRoleService _roleService;
 
-    public UserController(IUserService userService, IRoleService roleService)
-        => (_userService, _roleService) = (userService, roleService);
+    public UserController(ICurrentUserContextService currentUserContextService,
+                          IUserService userService,
+                          IRoleService roleService)
+    {
+        _currentUserContextService = currentUserContextService;
+        _userService = userService;
+        _roleService = roleService;
+    }
     #endregion
 
     #region Buscador
@@ -92,6 +100,9 @@ public class UserController : Controller
     {
         ViewData["Roles"] = new SelectList(await _roleService.GetForSelect(), "Id", "Description");
         var user = await _userService.GetById(id.Value);
+        if (user is null)
+            return NotFound();
+
         var model = new UserViewModel()
         {
             UserId = user.Id,
@@ -132,19 +143,48 @@ public class UserController : Controller
     #region Eliminar
     public async Task<IActionResult> Delete(int? id)
     {
-        ViewData["Roles"] = new SelectList(await _roleService.GetForSelect(), "Id", "Description");
         var user = await _userService.GetById(id.Value);
+        if (user is null)
+            return NotFound();
+
         var model = new UserViewModel()
         {
             UserId = user.Id,
             UserName = user.UserName,
-            Password = user.Password,
             FirstName = user.FirstName,
             LastName = user.LastName,
             Document = user.Document,
             RoleId = user.RoleId,
+            Role = user.Role.Description,
             Active = user.IsActive(),
         };
+        return View(model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Delete(UserViewModel model)
+    {
+
+        try
+        {
+            var currentUser = _currentUserContextService.GetUser();
+            if (currentUser.UserId == model.UserId)
+                throw new Exception("No puede eliminarte a ti mismo");
+
+            var user = await _userService.GetById(model.UserId);
+            if (user is null)
+                return NotFound();
+
+            await _userService.Delete(model.UserId);
+
+            return RedirectToAction("Index");
+        }
+        catch (Exception ex)
+        {
+            ViewBag.Error = ex.Message;
+        }
+
         return View(model);
     }
     #endregion

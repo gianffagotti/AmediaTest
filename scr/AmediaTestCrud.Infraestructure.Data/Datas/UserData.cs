@@ -29,9 +29,9 @@ public class UserData : IUserData
     public async Task Delete(int id)
     {
         var user = await GetById(id);
-        user.Eliminar();
+        _context.Remove(user);
 
-        await Update(user);
+        await _context.SaveChangesAsync();
     }
 
     public async Task<IEnumerable<User>> GetAll()
