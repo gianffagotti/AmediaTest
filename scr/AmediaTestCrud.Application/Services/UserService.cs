@@ -6,11 +6,14 @@ namespace AmediaTestCrud.Application.Services;
 
 public class UserService : IUserService
 {
+    #region Atributos
     private readonly IUserData _userData;
 
     public UserService(IUserData userData)
         => _userData = userData;
+    #endregion
 
+    #region Metodos
     public async Task<IEnumerable<User>> GetAll()
         => await _userData.GetAll();
 
@@ -26,4 +29,44 @@ public class UserService : IUserService
         else
             return user;
     }
+
+    public async Task Create(User newUser)
+    {
+        await ValidateUsersDuplicate(newUser);
+
+        await _userData.Add(newUser);
+    }
+
+    public async Task Update(User user)
+    {
+        await ValidateUsersDuplicate(user);
+
+        await _userData.Update(user);
+    }
+
+    public async Task Delete(int id)
+        => await _userData.Delete(id);
+
+    public async Task<User> GetById(int id)
+        => await _userData.GetById(id);
+    #endregion
+
+    #region Privados
+    private async Task ValidateUsersDuplicate(User user)
+    {
+        var users = await _userData.GetUsers(u => (u.UserName == user.UserName || u.Document == user.Document) && u.Id != user.Id);
+        if (users.Count() > 0)
+        {
+            var error = "";
+            if (users.Any(u => u.UserName == user.UserName))
+                error += "El usuario ya existe. ";
+
+            if (users.Any(u => u.Document == user.Document))
+                error += "El documento ya existe. ";
+
+            throw new Exception(error);
+        }
+    }
+    #endregion
+
 }

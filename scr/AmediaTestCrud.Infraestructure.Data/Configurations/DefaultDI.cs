@@ -14,6 +14,7 @@ public static class DefaultDI
         services.AddDbContext<TestCrudContext>(options => options.UseSqlServer(configuration.GetConnectionString("TestCrud")));
 
         services.AddScoped<IUserData, UserData>();
+        services.AddScoped<IRoleData, RoleData>();
 
         return services;
     }

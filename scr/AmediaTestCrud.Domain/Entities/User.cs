@@ -9,7 +9,7 @@ public partial class User
     public string LastName { get; private set;}
     public string Document { get; private set;}
     public int RoleId { get; private set;}
-    public int Active { get; private set;}
+    public int Active { get; private set;} // 1 activo, 0 inactivo, -1 eliminado
 
     public virtual Role Role { get; private set;}
 
@@ -35,5 +35,23 @@ public partial class User
         => this.Password == password;
 
     public bool IsActive()
-        => this.Active == 1;
+        => this.Active == 1;//Solo se maneja 1 = activo, else inactivo
+
+    public void Eliminar()
+        => this.Active = -1;
+
+    public void Update(string userName,
+                       string firstName,
+                       string lastName,
+                       string document,
+                       int roleId,
+                       int active)
+    {
+        UserName = userName;
+        FirstName = firstName;
+        LastName = lastName;
+        Document = document;
+        RoleId = roleId;
+        Active = active;
+    }
 }

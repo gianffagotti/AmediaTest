@@ -11,6 +11,7 @@ public static class DefaultDI
         services.AddHttpContextAccessor();
 
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IRoleService, RoleService>();
         services.AddScoped<ICurrentUserContextService, CurrentUserContextService>();
 
         return services;
