@@ -14,6 +14,7 @@ namespace AmediaTestCrud.Web.Controllers
 
         public IActionResult Index()
         {
+            ViewData["Layout"] = "~/Views/Shared/_LayoutLogin.cshtml";
             var user = _currentUserContextService.GetUser();
             ViewBag.Usuario = user?.UserName ?? "";
             return View();

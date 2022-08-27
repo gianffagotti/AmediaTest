@@ -1,3 +1,19 @@
-﻿@{
-    Layout = "_Layout";
+﻿@using AmediaTestCrud.Web.Services
+@{
+    var currentUserService = Html.ViewContext.HttpContext.RequestServices.GetService<ICurrentUserContextService>();
+    var currentUser = currentUserService.GetUser();
+    if (currentUser is not null)
+    {
+        switch (currentUser.Rol)
+        {
+            case AmediaTestCrud.Web.Models.UserContext.UserRoles.Admin:
+                Layout = "_Layout";
+                break;
+            default:
+                Layout = "_LayoutDefault";
+                break;
+        }
+    }
+    else
+        Layout = "_LayoutLogin";
 }
