@@ -1,33 +1,6 @@
 USE [TestCrud]
 GO
 
-/****** Object:  Table [dbo].[tRol]    Script Date: 27/08/2022 11:24:44 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[tRol]') AND type in (N'U'))
-DROP TABLE [dbo].[tRol]
-GO
-
-/****** Object:  Table [dbo].[tRol]    Script Date: 27/08/2022 11:24:44 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-CREATE TABLE [dbo].[tRol](
-	[cod_rol] [int] IDENTITY(1,1) NOT NULL,
-	[txt_desc] [varchar](500) NULL,
-	[sn_activo] [int] NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[cod_rol] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-
-
-ALTER TABLE [dbo].[tUsers] DROP CONSTRAINT [fk_user_rol]
-GO
-
 /****** Object:  Table [dbo].[tUsers]    Script Date: 27/08/2022 11:25:02 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[tUsers]') AND type in (N'U'))
 DROP TABLE [dbo].[tUsers]
@@ -52,7 +25,30 @@ CREATE TABLE [dbo].[tUsers](
 PRIMARY KEY CLUSTERED 
 (
 	[cod_usuario] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+/****** Object:  Table [dbo].[tRol]    Script Date: 27/08/2022 11:24:44 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[tRol]') AND type in (N'U'))
+DROP TABLE [dbo].[tRol]
+GO
+
+/****** Object:  Table [dbo].[tRol]    Script Date: 27/08/2022 11:24:44 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[tRol](
+	[cod_rol] [int] IDENTITY(1,1) NOT NULL,
+	[txt_desc] [varchar](500) NULL,
+	[sn_activo] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[cod_rol] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
 
@@ -62,6 +58,7 @@ GO
 
 ALTER TABLE [dbo].[tUsers] CHECK CONSTRAINT [fk_user_rol]
 GO
+
 
 INSERT INTO [trol] ([txt_desc],[sn_activo])VALUES('Administrador',1)
 INSERT INTO [trol] ([txt_desc],[sn_activo])VALUES('Cliente',1)
